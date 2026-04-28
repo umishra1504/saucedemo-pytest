@@ -1,0 +1,26 @@
+[project]
+name = "saucedemo-pytest"
+version = "1.0.0"
+description = "BDD test automation framework for SauceDemo using Pytest + Playwright"
+requires-python = ">=3.11"
+dependencies = [
+    "pytest>=8.0",
+    "pytest-playwright>=0.6.2",
+    "pytest-bdd>=7.0",
+    "python-dotenv>=1.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["step_defs"]
+bdd_features_base_dir = "features/"
+addopts = [
+    "--tb=short",
+    "-v",
+]
+markers = [
+    "login: Login feature tests",
+    "inventory: Inventory feature tests",
+    "cart: Cart feature tests",
+    "smoke: Smoke test suite",
+    "regression: Full regression suite",
+]
