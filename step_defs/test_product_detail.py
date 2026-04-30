@@ -12,7 +12,6 @@ scenarios("../features/product_detail.feature")
 
 
 @pytest.fixture
-
 def product_detail_page(page: Page) -> ProductDetailPage:
     return ProductDetailPage(page)
 
@@ -33,10 +32,16 @@ def open_first_product_from_inventory(inventory_page: InventoryPage, product_det
 
 @when(parsers.parse('I directly open product detail page for "{product_id}"'))
 def directly_open_product_detail(page: Page, product_id: str, product_detail_page: ProductDetailPage):
-    page.goto(f"https://www.saucedemo.com/inventory-item.html?id={product_id}")
+    page.goto(f"{page.context._impl_obj._options.get('base_url', 'https://www.saucedemo.com')}/inventory-item.html?id={product_id}")
     page.wait_for_load_state("domcontentloaded")
     if page.locator('[data-test="inventory-item-name"]').count() > 0:
         product_detail_page.wait_for_loaded()
+
+
+@when("I directly open an invalid product detail page from the address bar")
+def directly_open_invalid_product_detail(page: Page):
+    page.goto(f"{page.context._impl_obj._options.get('base_url', 'https://www.saucedemo.com')}/inventory-item.html?id=invalid")
+    page.wait_for_load_state("domcontentloaded")
 
 
 @when("I add the product to the cart from the detail page")
@@ -62,7 +67,6 @@ def add_first_inventory_product_to_cart(inventory_page: InventoryPage):
 
 @when("I try to tamper with the product identifier in the browser")
 def tamper_product_identifier(page: Page):
-    # Intentional no-op validation step: real tampering is environment/browser restricted.
     page.evaluate("window.history.replaceState({}, '', '/inventory-item.html?id=999')")
 
 
