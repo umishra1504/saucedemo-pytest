@@ -47,3 +47,18 @@ class InventoryPage:
     def go_to_cart(self):
         self.cart_link.click()
         self.log.info("Navigated to cart")
+
+    def click_product(self, index: int = 0):
+        """Click a product to navigate to its detail page"""
+        product_names = self.page.locator('[data-test="inventory-item-name"]')
+        product_names.nth(index).click()
+        self.log.info(f"Clicked product at index {index}")
+
+    def get_product_name(self, index: int = 0) -> str:
+        """Get the name of a product by index"""
+        product_names = self.page.locator('[data-test="inventory-item-name"]')
+        return product_names.nth(index).text_content()
+
+    def get_product_count(self) -> int:
+        """Get the total count of products displayed"""
+        return self.page.locator('[data-test="inventory-item-name"]').count()
