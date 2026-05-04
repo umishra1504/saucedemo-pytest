@@ -32,3 +32,16 @@ class CartPage:
     def proceed_to_checkout(self):
         self.checkout_btn.click()
         self.log.info("Proceeded to checkout")
+
+    def get_cart_item_names(self) -> list[str]:
+        """Get list of all cart item names"""
+        return self.get_item_names()
+
+    def get_cart_items(self) -> list[dict]:
+        """Get list of cart items with name and price"""
+        items = []
+        for i in range(self.cart_items.count()):
+            name = self.page.locator('[data-test="inventory-item-name"]').nth(i).text_content()
+            price = self.page.locator('[data-test="inventory-item-price"]').nth(i).text_content()
+            items.append({"name": name, "price": price})
+        return items
