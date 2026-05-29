@@ -39,6 +39,20 @@ class InventoryPage:
         items = self.page.locator('[data-test="inventory-item-name"]')
         return [items.nth(i).text_content() for i in range(items.count())]
 
+    def get_all_product_names(self) -> list[str]:
+        """Returns list of all product names on the inventory page."""
+        return self.get_item_names()
+
+    def click_product_by_name(self, product_name: str):
+        """Clicks on a product by its name to open the detail page."""
+        product_links = self.page.locator('[data-test="inventory-item-name"]')
+        for i in range(product_links.count()):
+            if product_links.nth(i).text_content() == product_name:
+                product_links.nth(i).click()
+                self.log.info(f"Clicked on product: {product_name}")
+                return
+        raise ValueError(f"Product '{product_name}' not found in inventory")
+
     def get_cart_badge_count(self) -> int:
         if self.cart_badge.is_visible():
             return int(self.cart_badge.text_content())
