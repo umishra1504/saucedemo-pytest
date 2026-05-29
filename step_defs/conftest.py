@@ -22,6 +22,12 @@ def cart_page(page: Page) -> CartPage:
 
 
 @pytest.fixture
+def product_detail_page(page: Page):
+    from pages.product_detail_page import ProductDetailPage
+    return ProductDetailPage(page)
+
+
+@pytest.fixture
 def logged_in_page(page: Page) -> Page:
     """Pre-authenticated page — logs in as standard user."""
     lp = LoginPage(page)
