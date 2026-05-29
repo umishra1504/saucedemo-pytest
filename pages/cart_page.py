@@ -20,6 +20,21 @@ class CartPage:
         items = self.page.locator('[data-test="inventory-item-name"]')
         return [items.nth(i).text_content() for i in range(items.count())]
 
+    def get_all_cart_item_names(self) -> list[str]:
+        """Returns list of all product names in the cart."""
+        return self.get_item_names()
+
+    def get_item_price_by_name(self, product_name: str) -> str:
+        """Returns the price of a specific product in the cart by its name."""
+        items = self.page.locator('[data-test="inventory-item"]')
+        for i in range(items.count()):
+            item = items.nth(i)
+            name_elem = item.locator('[data-test="inventory-item-name"]')
+            if name_elem.text_content() == product_name:
+                price_elem = item.locator('[data-test="inventory-item-price"]')
+                return price_elem.text_content()
+        return None
+
     def remove_item(self, index: int = 0):
         remove_buttons = self.page.locator('[data-test^="remove"]')
         remove_buttons.nth(index).click()
