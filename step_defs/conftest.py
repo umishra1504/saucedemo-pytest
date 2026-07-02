@@ -3,6 +3,7 @@ from playwright.sync_api import Page
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
+from pages.checkout_page import CheckoutPage
 from utils.config import STANDARD_USER, STANDARD_PASSWORD
 
 
@@ -19,6 +20,11 @@ def inventory_page(page: Page) -> InventoryPage:
 @pytest.fixture
 def cart_page(page: Page) -> CartPage:
     return CartPage(page)
+
+
+@pytest.fixture
+def checkout_page(page: Page) -> CheckoutPage:
+    return CheckoutPage(page)
 
 
 @pytest.fixture
