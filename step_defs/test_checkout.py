@@ -1,5 +1,3 @@
-import re
-
 import pytest
 from pytest_bdd import given, when, then, parsers, scenarios
 from playwright.sync_api import Page
